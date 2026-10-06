@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='pt-BR'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<meta name='robots' content='noindex,nofollow'>
+<title>Agenda de Henrique</title>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Barlow+Semi+Condensed:wght@400;500;600&display=swap'>
+<style>
+:root{--bg:#0c1014;--surface:#141a20;--surface-2:#1c242c;--fg:#e9eef3;--fg-dim:#7d8b99;--fg-faint:#4e5a66;--line:#26303a;--diretor:#ff2d2d;--livre:#39414a;--font-display:'Oswald',Arial Narrow,sans-serif;--font-body:'Barlow Semi Condensed',Roboto Condensed,system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);margin:0;padding:0 20px 40px;font-size:18px;-webkit-text-size-adjust:100%}
+.topo{padding:26px 0 16px;border-bottom:2px solid var(--diretor);margin-bottom:4px}
+.nome{font-family:var(--font-display);font-weight:600;font-size:clamp(32px,6vw,52px);letter-spacing:.02em;text-transform:uppercase;line-height:1;margin:0;color:var(--diretor)}
+.carimbo{margin:8px 0 0;font-family:var(--font-display);font-size:15px;letter-spacing:.09em;text-transform:uppercase;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+.sub{margin-top:10px;font-size:clamp(17px,2.2vw,21px);color:var(--fg-dim);line-height:1.35;max-width:62ch}
+.sub b{color:var(--fg);font-weight:600}
+.dias{display:flex;flex-direction:column;gap:4px;margin-top:18px}
+.dia{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 18px;background:var(--surface);border-left:4px solid var(--livre);padding:14px 16px}
+.dia.tem{border-left-color:var(--diretor);background:var(--surface-2)}
+.dia.hoje{box-shadow:inset 0 0 0 1px rgba(255,45,45,.45)}
+.cal{text-align:center;line-height:1}
+.cal .sem{font-family:var(--font-display);font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-faint)}
+.cal .num{font-family:var(--font-display);font-weight:600;font-size:40px;margin-top:2px;font-variant-numeric:tabular-nums}
+.dia.tem .cal .num{color:var(--fg)}
+.dia:not(.tem) .cal .num{color:var(--fg-faint)}
+.cal .mes{font-family:var(--font-display);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-faint);margin-top:2px}
+.corpo{min-width:0}
+.resumo{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:2px}
+button.resumo{font:inherit;color:inherit;background:none;border:0;padding:0;width:100%;text-align:left;cursor:pointer}
+button.resumo:focus-visible{outline:2px solid var(--diretor);outline-offset:4px}
+.seta{margin-left:auto;align-self:center;width:9px;height:9px;border-right:2px solid var(--fg-faint);border-bottom:2px solid var(--fg-faint);transform:rotate(45deg);transition:transform .12s}
+.dia.fechado .seta{transform:rotate(-45deg)}
+.dia.fechado .sessoes{display:none}
+.janela{font-family:var(--font-display);font-size:clamp(21px,2.6vw,27px);font-variant-numeric:tabular-nums;line-height:1.1}
+.dia:not(.tem) .janela{color:var(--fg-faint);font-size:19px}
+.qtd{font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-dim)}
+.etq{font-family:var(--font-display);font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px}
+.etq.hoje{background:var(--diretor);color:#fff}
+.etq.aviso{color:#ffc531;border:1px solid rgba(255,197,49,.55)}
+.sessoes{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.sessoes li{display:grid;grid-template-columns:108px minmax(0,1fr);gap:0 14px;padding:4px 0;border-top:1px solid var(--line)}
+.sh{font-variant-numeric:tabular-nums;color:var(--fg-dim);font-size:17px}
+.sd{min-width:0;overflow-wrap:anywhere;font-size:17px}
+.sd .pr{color:var(--fg-dim)}
+.pres{font-family:var(--font-display);font-size:12px;letter-spacing:.09em;color:#ffc531;border:1px solid rgba(255,197,49,.5);border-radius:2px;padding:0 5px;margin-left:7px;white-space:nowrap}
+.nota{margin-top:26px;font-size:15px;color:var(--fg-faint);line-height:1.6;max-width:64ch}
+@media(max-width:560px){.dia{grid-template-columns:72px minmax(0,1fr);gap:0 12px;padding:12px}.cal .num{font-size:32px}.sessoes li{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+<header class='topo'>
+  <h1 class='nome'>Henrique</h1>
+  <p class='carimbo' id='carimbo'>&nbsp;</p>
+  <p class='sub' id='sub'>&nbsp;</p>
+</header>
+<div class='dias' id='dias'></div>
+<p class='nota'>Esta agenda compreende as datas de duas semanas a partir desta, incluindo dias sem agendamento de dubladores.</p>
+<script>
+const DADOS = [
+{d:'06.10.2026',h:'09:00 - 18:00',s:[{a:'09:00',b:'09:30',n:'DLAIGELLES SILVA',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'09:30',b:'10:00',n:'FADULI COSTA',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'10:00',b:'10:30',n:'VANDERLAN MENDES',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'10:30',b:'11:30',n:'ROBERTA NOGUEIRA',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'11:30',b:'12:00',n:'CAMILA CASTELLANI',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'17:00',b:'18:00',n:'LIA MELLO',p:'1000-LB ROOMIES S2 (LR) RUSH [635532/635533]',x:0}]},
+{d:'07.10.2026',h:'09:00 - 11:30',s:[{a:'09:00',b:'09:30',n:'PATRICIA SCALVI',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'09:30',b:'10:00',n:'FATIMA NOYA',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'11:00',b:'11:30',n:'LUCIANA BAROLI',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0}]},
+{d:'08.10.2026',h:'08:00 - 10:30',s:[{a:'08:00',b:'09:15',n:'ADRIANA PISSARDINI',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'09:15',b:'10:00',n:'SILVIO GIRALDI',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0},{a:'10:00',b:'10:30',n:'MARCUS PEJON',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:0}]},
+{d:'09.10.2026',h:'09:00 - 09:30',s:[{a:'09:00',b:'09:30',n:'CESAR MARCHETTI',p:'ER: CAUGHT ON CAMERA [640015/640018]',x:1}]},
+{d:'10.10.2026',h:'SEM DIREÇÃO',s:[]},
+{d:'12.10.2026',h:'',s:[]},
+{d:'13.10.2026',h:'',s:[]},
+{d:'14.10.2026',h:'',s:[]},
+{d:'15.10.2026',h:'',s:[]},
+{d:'16.10.2026',h:'',s:[]},
+{d:'17.10.2026',h:'',s:[]}
+];
+const HOJE = '06.10.2026';
+const GERADO = '06/10/2026 11:03';
+const DIAS=['dom','seg','ter','qua','qui','sex','s\u00e1b'];
+const MESES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const dt=s=>{const p=s.split('.');return new Date(+p[2],+p[1]-1,+p[0]);};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const hoje0=new Date(); hoje0.setHours(0,0,0,0);
+const pad2=n=>(n<10?'0':'')+n;
+const HOJETXT=pad2(hoje0.getDate())+'.'+pad2(hoje0.getMonth()+1)+'.'+hoje0.getFullYear();
+const VIS=DADOS.filter(d=>dt(d.d)>=hoje0);
+const comSessao=VIS.filter(d=>d.s.length);
+const total=comSessao.reduce((a,d)=>a+d.s.length,0);
+document.getElementById('carimbo').textContent='Gerado em '+GERADO;
+if(VIS.length===0){
+  document.getElementById('sub').innerHTML='<b>Esta agenda est\u00e1 vencida.</b> '+'Ela foi gerada em '+GERADO+' e j\u00e1 n\u00e3o cobre os pr\u00f3ximos dias. '+'Pe\u00e7a \u00e0 Escalas para salvar a programa\u00e7\u00e3o.';
+} else {
+  document.getElementById('sub').innerHTML='Voc\u00ea est\u00e1 escalado em <b>'+comSessao.length+' dos pr\u00f3ximos '+VIS.length+' dias</b>, somando <b>'+total+' sess\u00f5es</b>.';
+}
+document.getElementById('dias').innerHTML=VIS.map(d=>{
+  const data=dt(d.d), tem=d.s.length>0, ehHoje=d.d===HOJETXT;
+  const semDir=tem&&!/\d/.test(d.h);
+  const janela=semDir?(d.s[0].a+' \u2013 '+d.s[d.s.length-1].b):(tem?d.h.replace('-','\u2013'):'livre');
+  const etqs=(ehHoje?'<span class="etq hoje">hoje</span>':'')+(semDir?'<span class="etq aviso">hor\u00e1rio do diretor n\u00e3o definido</span>':'');
+  const linhas=d.s.map(x=>'<li><span class="sh">'+esc(x.a)+' \u2013 '+esc(x.b)+'</span>'+'<span class="sd">'+esc(x.n)+(x.x?'<span class="pres">Presencial</span>':'')+'<br><span class="pr">'+(x.p?esc(x.p):'\u2014')+'</span></span></li>').join('');
+  return '<div class="dia'+(tem?' tem':'')+(ehHoje?' hoje':'')+'">'
+    +'<div class="cal"><div class="sem">'+DIAS[data.getDay()]+'</div>'
+    +'<div class="num">'+d.d.slice(0,2)+'</div>'
+    +'<div class="mes">'+MESES[data.getMonth()]+'</div></div>'
+    +'<div class="corpo">'
+    +(tem?'<button class="resumo" type="button" aria-expanded="true">':'<div class="resumo">')
+    +'<span class="janela">'+janela+'</span>'
+    +(tem?'<span class="qtd">'+d.s.length+(d.s.length>1?' sess\u00f5es':' sess\u00e3o')+'</span>':'')
+    +etqs+(tem?'<span class="seta"></span></button>':'</div>')
+    +(tem?'<ul class="sessoes">'+linhas+'</ul>':'')
+    +'</div></div>';
+}).join('');
+document.getElementById('dias').addEventListener('click',ev=>{
+  const bt=ev.target.closest('button.resumo'); if(!bt) return;
+  const dia=bt.closest('.dia');
+  const fechado=dia.classList.toggle('fechado');
+  bt.setAttribute('aria-expanded',fechado?'false':'true');
+});
+
+</script>
+</body></html>
