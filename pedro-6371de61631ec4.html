@@ -61,11 +61,10 @@ button.resumo:focus-visible{outline:2px solid var(--diretor);outline-offset:4px}
 <p class='nota'>Esta agenda compreende as datas de duas semanas a partir desta, incluindo dias sem agendamento de dubladores.</p>
 <script>
 const DADOS = [
-{d:'06.10.2026',h:'SEM DIREÇÃO',s:[]},
-{d:'07.10.2026',h:'14:00 - 14:30',s:[{a:'14:00',b:'14:30',n:'PEDRO LUIZ',p:'ONE BORN EVERY MINUTE: UK S9 (OBE) [210066/210068]',x:0}]},
-{d:'08.10.2026',h:'SEM DIREÇÃO',s:[]},
-{d:'09.10.2026',h:'SEM DIREÇÃO',s:[]},
-{d:'10.10.2026',h:'SEM DIREÇÃO',s:[]},
+{d:'07.10.2026',h:'',s:[]},
+{d:'08.10.2026',h:'',s:[]},
+{d:'09.10.2026',h:'',s:[]},
+{d:'10.10.2026',h:'',s:[]},
 {d:'12.10.2026',h:'',s:[]},
 {d:'13.10.2026',h:'',s:[]},
 {d:'14.10.2026',h:'',s:[]},
@@ -73,8 +72,8 @@ const DADOS = [
 {d:'16.10.2026',h:'',s:[]},
 {d:'17.10.2026',h:'',s:[]}
 ];
-const HOJE = '06.10.2026';
-const GERADO = '06/10/2026 17:11';
+const HOJE = '07.10.2026';
+const GERADO = '07/10/2026 10:07';
 const DIAS=['dom','seg','ter','qua','qui','sex','s\u00e1b'];
 const MESES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const dt=s=>{const p=s.split('.');return new Date(+p[2],+p[1]-1,+p[0]);};
