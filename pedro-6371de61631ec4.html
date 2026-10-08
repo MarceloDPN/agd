@@ -61,7 +61,6 @@ button.resumo:focus-visible{outline:2px solid var(--diretor);outline-offset:4px}
 <p class='nota'>Esta agenda compreende as datas de duas semanas a partir desta, incluindo dias sem agendamento de dubladores.</p>
 <script>
 const DADOS = [
-{d:'07.10.2026',h:'',s:[]},
 {d:'08.10.2026',h:'',s:[]},
 {d:'09.10.2026',h:'',s:[]},
 {d:'10.10.2026',h:'',s:[]},
@@ -72,8 +71,8 @@ const DADOS = [
 {d:'16.10.2026',h:'',s:[]},
 {d:'17.10.2026',h:'',s:[]}
 ];
-const HOJE = '07.10.2026';
-const GERADO = '07/10/2026 10:07';
+const HOJE = '08.10.2026';
+const GERADO = '08/10/2026 17:21';
 const DIAS=['dom','seg','ter','qua','qui','sex','s\u00e1b'];
 const MESES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const dt=s=>{const p=s.split('.');return new Date(+p[2],+p[1]-1,+p[0]);};
@@ -95,9 +94,10 @@ document.getElementById('dias').innerHTML=VIS.map(d=>{
   const semDir=tem&&!/\d/.test(d.h);
   const janela=semDir?(d.s[0].a+' \u2013 '+d.s[d.s.length-1].b):(tem?d.h.replace('-','\u2013'):'livre');
   const etqs=(ehHoje?'<span class="etq hoje">hoje</span>':'')+(semDir?'<span class="etq aviso">hor\u00e1rio do diretor n\u00e3o definido</span>':'');
+  const cap=s=>s?s.charAt(0)+s.slice(1).toLowerCase():'';
   const linhas=d.s.map((x,ix)=>{
     const corte=ix>0&&d.s[ix-1].b!==x.a;
-    return '<li'+(corte?' class="intervalo"':'')+'>'+'<span class="sh">'+esc(x.a)+' \u2013 '+esc(x.b)+'</span>'+'<span class="sd">'+esc(x.n)+(x.x?'<span class="pres">Presencial</span>':'')+'</span>'+'<span class="pr">'+(x.p?esc(x.p):'\u2014')+'</span></li>';
+    return '<li'+(corte?' class="intervalo"':'')+'>'+'<span class="sh">'+esc(x.a)+' \u2013 '+esc(x.b)+'</span>'+'<span class="sd">'+esc(x.n)+(x.x?'<span class="pres">'+cap(x.x)+'</span>':'')+'</span>'+'<span class="pr">'+(x.p?esc(x.p):'\u2014')+'</span></li>';
   }).join('');
   return '<div class="dia'+(tem?' tem':'')+(ehHoje?' hoje':'')+'">'
     +'<div class="cal"><div class="sem">'+DIAS[data.getDay()]+'</div>'
