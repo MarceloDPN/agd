@@ -61,18 +61,20 @@ button.resumo:focus-visible{outline:2px solid var(--diretor);outline-offset:4px}
 <p class='nota'>Esta agenda compreende as datas de duas semanas a partir desta, incluindo dias sem agendamento de dubladores.</p>
 <script>
 const DADOS = [
-{d:'08.10.2026',h:'SEM DIREÇÃO',s:[]},
-{d:'09.10.2026',h:'SEM DIREÇÃO',s:[]},
-{d:'10.10.2026',h:'SEM DIREÇÃO',s:[]},
-{d:'12.10.2026',h:'',s:[]},
 {d:'13.10.2026',h:'',s:[]},
 {d:'14.10.2026',h:'',s:[]},
 {d:'15.10.2026',h:'',s:[]},
 {d:'16.10.2026',h:'',s:[]},
-{d:'17.10.2026',h:'',s:[]}
+{d:'17.10.2026',h:'',s:[]},
+{d:'19.10.2026',h:'',s:[]},
+{d:'20.10.2026',h:'',s:[]},
+{d:'21.10.2026',h:'',s:[]},
+{d:'22.10.2026',h:'',s:[]},
+{d:'23.10.2026',h:'',s:[]},
+{d:'24.10.2026',h:'',s:[]}
 ];
-const HOJE = '08.10.2026';
-const GERADO = '08/10/2026 17:21';
+const HOJE = '13.10.2026';
+const GERADO = '13/10/2026 12:59';
 const DIAS=['dom','seg','ter','qua','qui','sex','s\u00e1b'];
 const MESES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const dt=s=>{const p=s.split('.');return new Date(+p[2],+p[1]-1,+p[0]);};
